@@ -3,11 +3,10 @@ package consul_utils
 import (
 	"strings"
 
-	"github.com/cheebo/consul-utils/types"
 	"github.com/hashicorp/consul/api"
 )
 
-func GetKV(client *api.Client, key string, opt types.QueryOptions) (string, error) {
+func GetKV(client *api.Client, key string, opt QueryOptions) (string, error) {
 	q := &api.QueryOptions{
 		Datacenter:        opt.Datacenter,
 		Token:             opt.Token,
@@ -23,7 +22,7 @@ func GetKV(client *api.Client, key string, opt types.QueryOptions) (string, erro
 	return strings.TrimSpace(string(kvpair.Value)), nil
 }
 
-func PutKV(client *api.Client, key, value string, opt types.QueryOptions) (bool, error) {
+func PutKV(client *api.Client, key, value string, opt QueryOptions) (bool, error) {
 	p := &api.KVPair{Key: key, Value: []byte(value)}
 	ok, _, err := client.KV().CAS(p, &api.WriteOptions{
 		Datacenter: opt.Datacenter,
@@ -35,7 +34,7 @@ func PutKV(client *api.Client, key, value string, opt types.QueryOptions) (bool,
 	return ok, nil
 }
 
-func Del(client *api.Client, key string, opt types.QueryOptions) (bool, error) {
+func Del(client *api.Client, key string, opt QueryOptions) (bool, error) {
 	_, err := client.KV().Delete(key, &api.WriteOptions{
 		Datacenter: opt.Datacenter,
 		Token:      opt.Token,
@@ -46,7 +45,7 @@ func Del(client *api.Client, key string, opt types.QueryOptions) (bool, error) {
 	return true, nil
 }
 
-func DelTree(client *api.Client, prefix string, opt types.QueryOptions) (bool, error) {
+func DelTree(client *api.Client, prefix string, opt QueryOptions) (bool, error) {
 	_, err := client.KV().DeleteTree(prefix, &api.WriteOptions{
 		Datacenter: opt.Datacenter,
 		Token:      opt.Token,

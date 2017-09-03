@@ -3,8 +3,7 @@ package consul_utils_test
 import (
 	"testing"
 	"github.com/hashicorp/consul/api"
-	"github.com/cheebo/consul-utils/service"
-	"github.com/cheebo/consul-utils/types"
+	cu "github.com/cheebo/consul-utils"
 	"github.com/stretchr/testify/assert"
 )
 /*
@@ -20,7 +19,7 @@ Consul Service Configuration for test:
 func TestGetServiceAddr(t *testing.T) {
 	assert := assert.New(t)
 
-	opt := types.QueryOptions{
+	opt := cu.QueryOptions{
 		Datacenter: "dc1",
 		Token: "",
 	}

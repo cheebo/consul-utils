@@ -3,7 +3,6 @@ package consul_utils
 import (
 	"errors"
 
-	"github.com/cheebo/consul-utils/types"
 	"github.com/hashicorp/consul/api"
 )
 
@@ -18,7 +17,7 @@ var (
 	ServiceError = errors.New("Service not found")
 )
 
-func GetServiceAddr(client *api.Client, service, tag string, opt types.QueryOptions) (addrs []*ServiceAddr, err error) {
+func GetServiceAddr(client *api.Client, service, tag string, opt QueryOptions) (addrs []*ServiceAddr, err error) {
 	services, _, err := client.Catalog().Service(service, tag, &api.QueryOptions{
 		Datacenter:        opt.Datacenter,
 		Token:             opt.Token,
