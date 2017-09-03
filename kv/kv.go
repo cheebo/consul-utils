@@ -2,14 +2,15 @@ package kv
 
 import (
 	"strings"
-	"github.com/hashicorp/consul/api"
+
 	"github.com/cheebo/consul-utils/types"
+	"github.com/hashicorp/consul/api"
 )
 
 func GetKV(client *api.Client, key string, opt types.QueryOptions) (string, error) {
 	q := &api.QueryOptions{
-		Datacenter: opt.Datacenter,
-		Token: opt.Token,
+		Datacenter:        opt.Datacenter,
+		Token:             opt.Token,
 		RequireConsistent: true,
 	}
 	kvpair, _, err := client.KV().Get(key, q)
@@ -26,7 +27,7 @@ func PutKV(client *api.Client, key, value string, opt types.QueryOptions) (bool,
 	p := &api.KVPair{Key: key, Value: []byte(value)}
 	ok, _, err := client.KV().CAS(p, &api.WriteOptions{
 		Datacenter: opt.Datacenter,
-		Token: opt.Token,
+		Token:      opt.Token,
 	})
 	if err != nil {
 		return false, err
@@ -37,7 +38,7 @@ func PutKV(client *api.Client, key, value string, opt types.QueryOptions) (bool,
 func Del(client *api.Client, key string, opt types.QueryOptions) (bool, error) {
 	_, err := client.KV().Delete(key, &api.WriteOptions{
 		Datacenter: opt.Datacenter,
-		Token: opt.Token,
+		Token:      opt.Token,
 	})
 	if err != nil {
 		return false, err
@@ -48,7 +49,7 @@ func Del(client *api.Client, key string, opt types.QueryOptions) (bool, error) {
 func DelTree(client *api.Client, prefix string, opt types.QueryOptions) (bool, error) {
 	_, err := client.KV().DeleteTree(prefix, &api.WriteOptions{
 		Datacenter: opt.Datacenter,
-		Token: opt.Token,
+		Token:      opt.Token,
 	})
 	if err != nil {
 		return false, err

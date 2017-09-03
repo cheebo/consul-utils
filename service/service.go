@@ -2,15 +2,16 @@ package service
 
 import (
 	"errors"
-	"github.com/hashicorp/consul/api"
+
 	"github.com/cheebo/consul-utils/types"
+	"github.com/hashicorp/consul/api"
 )
 
 type ServiceAddr struct {
-	Addr            string
-	ServiceID       string
-	ServiceAddr     string
-	ServicePort     int
+	Addr        string
+	ServiceID   string
+	ServiceAddr string
+	ServicePort int
 }
 
 var (
@@ -19,8 +20,8 @@ var (
 
 func GetServiceAddr(client *api.Client, service, tag string, opt types.QueryOptions) (addrs []*ServiceAddr, err error) {
 	services, _, err := client.Catalog().Service(service, tag, &api.QueryOptions{
-		Datacenter: opt.Datacenter,
-		Token: opt.Token,
+		Datacenter:        opt.Datacenter,
+		Token:             opt.Token,
 		RequireConsistent: true,
 	})
 	if err != nil {
@@ -33,13 +34,12 @@ func GetServiceAddr(client *api.Client, service, tag string, opt types.QueryOpti
 
 	for _, s := range services {
 		addrs = append(addrs, &ServiceAddr{
-				Addr:        s.Address,
-				ServiceID:   s.ServiceID,
-				ServiceAddr: s.ServiceAddress,
-				ServicePort: s.ServicePort,
-			})
+			Addr:        s.Address,
+			ServiceID:   s.ServiceID,
+			ServiceAddr: s.ServiceAddress,
+			ServicePort: s.ServicePort,
+		})
 	}
 
 	return addrs, nil
 }
-
