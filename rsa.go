@@ -1,4 +1,4 @@
-package pubkey
+package consul_utils
 
 import (
 	"crypto/rsa"

@@ -1,4 +1,4 @@
-package types
+package consul_utils
 
 type QueryOptions struct {
 	Datacenter string

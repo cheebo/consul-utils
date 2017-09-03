@@ -1,4 +1,4 @@
-package kv_test
+package consul_utils_test
 
 import (
 	"testing"

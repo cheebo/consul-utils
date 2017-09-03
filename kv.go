@@ -1,4 +1,4 @@
-package kv
+package consul_utils
 
 import (
 	"strings"
